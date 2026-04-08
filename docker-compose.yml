@@ -1,0 +1,16 @@
+services:
+  yuyo-db:
+    image: postgres:16-alpine
+    restart: always
+    container_name: yuyo-dev-db
+    environment:
+      - POSTGRES_USER=yuyo_user
+      - POSTGRES_PASSWORD=yuyo_pass
+      - POSTGRES_DB=yuyodev_boilerplate
+    ports:
+      - "5439:5432"  # <--- Usamos el 5439 afuera
+    volumes:
+      - yuyo-data:/var/lib/postgresql/data
+
+volumes:
+  yuyo-data:

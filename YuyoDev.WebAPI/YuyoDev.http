@@ -1,0 +1,28 @@
+### 1. Iniciar Sesión en Yuyo Dev
+POST http://localhost:5212/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "yuyo@yuyodev.com",
+  "password": "MasterYuyo2026!"
+}
+
+> {%
+    // Esto guarda el token automáticamente sin que tengas que copiar y pegar nada
+    client.global.set("auth_token", response.body.token);
+%}
+
+###
+
+### 2. Probar Endpoint Protegido
+GET http://localhost:5212/api/Test/privado
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9AeXV5b2Rldi5jb20iLCJuYW1laWQiOiJmMjI5N2M5My0xMGRlLTQ5ODctYTY4Ni03OWNkZWY5YmY4OWMiLCJ1c2VybmFtZSI6Inl1eW9AeXV5b2Rldi5jb20iLCJyb2xlIjoiU3VwQWRtaW4iLCJuYmYiOjE3NzU1NjUwMDAsImV4cCI6MTc3NTU2ODYwMCwiaWF0IjoxNzc1NTY1MDAwLCJpc3MiOiJZdXlvRGV2LkJvaWxlcnBsYXRlIiwiYXVkIjoiWXV5b0Rldi5DbGllbnRzIn0.kbvYg_WsaC7U4UketJWKNwj5AS2WRjvFyMri7VCTCCcXxLtew43AchN1W7T2vC0WRVNQibUcpU1u_wD7gYgGTw
+
+### 3. Obtener todos los usuarios (Solo SupAdmin)
+# Primero asegurate de haber hecho el POST de Login con yuyo@yuyodev.com
+GET http://localhost:5212/api/User
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9AeXV5b2Rldi5jb20iLCJuYW1laWQiOiJmMjI5N2M5My0xMGRlLTQ5ODctYTY4Ni03OWNkZWY5YmY4OWMiLCJ1c2VybmFtZSI6Inl1eW9AeXV5b2Rldi5jb20iLCJyb2xlIjoiU3VwQWRtaW4iLCJuYmYiOjE3NzU1NjUwMDAsImV4cCI6MTc3NTU2ODYwMCwiaWF0IjoxNzc1NTY1MDAwLCJpc3MiOiJZdXlvRGV2LkJvaWxlcnBsYXRlIiwiYXVkIjoiWXV5b0Rldi5DbGllbnRzIn0.kbvYg_WsaC7U4UketJWKNwj5AS2WRjvFyMri7VCTCCcXxLtew43AchN1W7T2vC0WRVNQibUcpU1u_wD7gYgGTw
+
+### 4. Eliminar un usuario (Limpieza de pruebas)
+DELETE http://localhost:5212/api/User/4227c616-5a73-41ff-9a68-272ba6106c0b
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9AeXV5b2Rldi5jb20iLCJuYW1laWQiOiJmMjI5N2M5My0xMGRlLTQ5ODctYTY4Ni03OWNkZWY5YmY4OWMiLCJ1c2VybmFtZSI6Inl1eW9AeXV5b2Rldi5jb20iLCJyb2xlIjoiU3VwQWRtaW4iLCJuYmYiOjE3NzU1NjUwMDAsImV4cCI6MTc3NTU2ODYwMCwiaWF0IjoxNzc1NTY1MDAwLCJpc3MiOiJZdXlvRGV2LkJvaWxlcnBsYXRlIiwiYXVkIjoiWXV5b0Rldi5DbGllbnRzIn0.kbvYg_WsaC7U4UketJWKNwj5AS2WRjvFyMri7VCTCCcXxLtew43AchN1W7T2vC0WRVNQibUcpU1u_wD7gYgGTw

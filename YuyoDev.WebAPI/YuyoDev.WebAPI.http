@@ -1,0 +1,6 @@
+@YuyoDev.WebAPI_HostAddress = http://localhost:5212
+
+GET {{YuyoDev.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
