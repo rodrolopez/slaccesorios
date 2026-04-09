@@ -1,5 +1,9 @@
+@hostname = localhost
+@port = 5212
+@host = http://{{hostname}}:{{port}}
+
 ### 1. Iniciar Sesión en Yuyo Dev
-POST http://localhost:5212/api/Auth/login
+POST {{host}}/api/Auth/login
 Content-Type: application/json
 
 {
@@ -15,14 +19,25 @@ Content-Type: application/json
 ###
 
 ### 2. Probar Endpoint Protegido
-GET http://localhost:5212/api/Test/privado
+GET {{host}}/api/Test/privado
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9AeXV5b2Rldi5jb20iLCJuYW1laWQiOiJmMjI5N2M5My0xMGRlLTQ5ODctYTY4Ni03OWNkZWY5YmY4OWMiLCJ1c2VybmFtZSI6Inl1eW9AeXV5b2Rldi5jb20iLCJyb2xlIjoiU3VwQWRtaW4iLCJuYmYiOjE3NzU1NjUwMDAsImV4cCI6MTc3NTU2ODYwMCwiaWF0IjoxNzc1NTY1MDAwLCJpc3MiOiJZdXlvRGV2LkJvaWxlcnBsYXRlIiwiYXVkIjoiWXV5b0Rldi5DbGllbnRzIn0.kbvYg_WsaC7U4UketJWKNwj5AS2WRjvFyMri7VCTCCcXxLtew43AchN1W7T2vC0WRVNQibUcpU1u_wD7gYgGTw
 
 ### 3. Obtener todos los usuarios (Solo SupAdmin)
 # Primero asegurate de haber hecho el POST de Login con yuyo@yuyodev.com
-GET http://localhost:5212/api/User
+GET {{host}}/api/User
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9AeXV5b2Rldi5jb20iLCJuYW1laWQiOiJmMjI5N2M5My0xMGRlLTQ5ODctYTY4Ni03OWNkZWY5YmY4OWMiLCJ1c2VybmFtZSI6Inl1eW9AeXV5b2Rldi5jb20iLCJyb2xlIjoiU3VwQWRtaW4iLCJuYmYiOjE3NzU1NjUwMDAsImV4cCI6MTc3NTU2ODYwMCwiaWF0IjoxNzc1NTY1MDAwLCJpc3MiOiJZdXlvRGV2LkJvaWxlcnBsYXRlIiwiYXVkIjoiWXV5b0Rldi5DbGllbnRzIn0.kbvYg_WsaC7U4UketJWKNwj5AS2WRjvFyMri7VCTCCcXxLtew43AchN1W7T2vC0WRVNQibUcpU1u_wD7gYgGTw
 
 ### 4. Eliminar un usuario (Limpieza de pruebas)
-DELETE http://localhost:5212/api/User/4227c616-5a73-41ff-9a68-272ba6106c0b
+DELETE {{host}}/api/User/4227c616-5a73-41ff-9a68-272ba6106c0b
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9AeXV5b2Rldi5jb20iLCJuYW1laWQiOiJmMjI5N2M5My0xMGRlLTQ5ODctYTY4Ni03OWNkZWY5YmY4OWMiLCJ1c2VybmFtZSI6Inl1eW9AeXV5b2Rldi5jb20iLCJyb2xlIjoiU3VwQWRtaW4iLCJuYmYiOjE3NzU1NjUwMDAsImV4cCI6MTc3NTU2ODYwMCwiaWF0IjoxNzc1NTY1MDAwLCJpc3MiOiJZdXlvRGV2LkJvaWxlcnBsYXRlIiwiYXVkIjoiWXV5b0Rldi5DbGllbnRzIn0.kbvYg_WsaC7U4UketJWKNwj5AS2WRjvFyMri7VCTCCcXxLtew43AchN1W7T2vC0WRVNQibUcpU1u_wD7gYgGTw
+
+### Simular Webhook de Mercado Pago
+POST {{host}}/api/webhook/mercadopago
+Content-Type: application/json
+
+{
+    "id": "123456789",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta Donata del Desierto"
+}
