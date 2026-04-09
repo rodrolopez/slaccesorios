@@ -1,5 +1,16 @@
+## --- SECRETOS Y CONFIGURACIÓN LOCAL ---
+appsettings.Development.json
+
+## --- CARPETAS DE COMPILACIÓN ---
 [Bb]in/
 [Oo]bj/
+
+## --- VISUAL STUDIO / RIDER ---
 .vs/
 .idea/
 *.user
+*.suo
+
+## --- SISTEMA OPERATIVO ---
+Thumbs.db
+.DS_Store

@@ -11,11 +11,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    public DbSet<AuditLog> AuditLogs { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        // Esto es un "Yuyo Tip": PostgreSQL prefiere snake_case.
-        // Por ahora lo dejamos estándar, pero aquí podrías renombrar las tablas de Identity.
+        // Configuramos la tabla de Auditoría para que sea eficiente
+        builder.Entity<AuditLog>(entity =>
+        {
+            entity.Property(a => a.Action).HasMaxLength(100).IsRequired();
+            entity.Property(a => a.EntityName).HasMaxLength(100).IsRequired();
+        });
+
     }
 }
