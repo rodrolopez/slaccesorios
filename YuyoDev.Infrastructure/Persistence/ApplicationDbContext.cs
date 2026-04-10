@@ -26,6 +26,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ProductVariant> ProductVariants { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<WarrantyTicket> WarrantyTickets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -109,6 +110,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             entity.HasOne(oi => oi.ProductVariant)
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductVariantId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        // Filtro Multitenant para Garantías
+        builder.Entity<WarrantyTicket>().HasQueryFilter(w => w.TenantId == currentTenantId);
+
+        // Fluent API para Garantías
+        builder.Entity<WarrantyTicket>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.IssueDescription).IsRequired().HasMaxLength(1000);
+
+            // Relación con el ítem comprado (Restrict para no borrar el ítem si hay un ticket abierto)
+            entity.HasOne(w => w.OrderItem)
+                .WithMany()
+                .HasForeignKey(w => w.OrderItemId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
     }
