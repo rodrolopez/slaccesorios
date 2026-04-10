@@ -1,16 +1,16 @@
 services:
-  yuyo-db:
-    image: postgres:16-alpine
-    restart: always
-    container_name: yuyo-dev-db
+  db-tech: # Cambiamos el nombre del servicio
+    image: postgres:15-alpine
+    container_name: slaccesorios # Nombre único para este proyecto
     environment:
-      - POSTGRES_USER=yuyo_user
-      - POSTGRES_PASSWORD=yuyo_pass
-      - POSTGRES_DB=yuyodev_boilerplate
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: slaccesorios_db # Base de datos limpia
     ports:
-      - "5439:5432"  # <--- Usamos el 5439 afuera
+      - "55432:5432" # <-- MAGIA: Exponemos el puerto 5433 en tu Ubuntu, hacia el 5432 del contenedor
     volumes:
-      - yuyo-data:/var/lib/postgresql/data
+      - slaccesorios_data:/var/lib/postgresql/data # Volumen separado para no pisar el boilerplate
+    restart: unless-stopped
 
 volumes:
-  yuyo-data:
+  slaccesorios_data:
