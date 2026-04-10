@@ -41,3 +41,15 @@ Content-Type: application/json
     "amount": 1500.00,
     "description": "Pinta Donata del Desierto"
 }
+
+#Simular Peticion por Cliente
+POST {{host}}/api/webhook/mercadopago
+Content-Type: application/json
+X-Tenant-Id: DonataDelDesierto
+
+{
+    "id": "987654321",
+    "status": "approved",
+    "amount": 2500.00,
+    "description": "Dos pintas IPA"
+}

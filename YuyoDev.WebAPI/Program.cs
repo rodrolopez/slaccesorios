@@ -1,3 +1,5 @@
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using YuyoDev.Domain.Entities;
@@ -59,6 +61,27 @@ builder.Services.AddAuthentication(options => {
         };
     });
 
+// Acá registramos el servicio de correos
+builder.Services.AddTransient<IEmailService, LocalEmailService>();
+
+// Habilita a la API a leer los datos de la petición actual (Headers, Cookies, etc.)
+builder.Services.AddHttpContextAccessor();
+
+// Registramos el servicio de Tenant. Usamos "AddScoped" porque queremos 
+// que el TenantId se calcule una vez por cada petición HTTP que entra.
+builder.Services.AddScoped<ITenantService, TenantService>();
+
+// --- CONFIGURACIÓN DE HANGFIRE ---
+builder.Services.AddHangfire(config => config
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UsePostgreSqlStorage(options =>
+    options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+// Le decimos a la API que también funcione como un "Trabajador" que procesa tareas
+builder.Services.AddHangfireServer();
+
 // 3. SERVICIOS DE API Y SWAGGER
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -79,6 +102,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "YuyoDev API V1");
         // Dejamos la ruta base como 'swagger'
     });
+    app.UseHangfireDashboard();
 }
 
 // Importante: HTTP en Linux a veces es más estable para desarrollo local
