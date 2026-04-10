@@ -24,6 +24,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Brand> Brands { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductVariant> ProductVariants { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -77,6 +79,37 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                   .WithMany(p => p.Variants)
                   .HasForeignKey(v => v.ProductId)
                   .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Filtros Multitenant para Órdenes
+        builder.Entity<Order>().HasQueryFilter(o => o.TenantId == currentTenantId);
+        builder.Entity<OrderItem>().HasQueryFilter(oi => oi.TenantId == currentTenantId);
+
+        // Fluent API para Órdenes
+        builder.Entity<Order>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TotalAmount).HasColumnType("numeric(18,2)");
+            // UserId se mapeará con IdentityUser, lo dejamos como string requerido por ahora
+            entity.Property(e => e.UserId).IsRequired();
+        });
+
+        builder.Entity<OrderItem>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.UnitPrice).HasColumnType("numeric(18,2)");
+
+            // Relación con la orden (Cascada: si borro la orden, se borran sus items)
+            entity.HasOne(oi => oi.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(oi => oi.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relación con la variante del producto
+            entity.HasOne(oi => oi.ProductVariant)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductVariantId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 
