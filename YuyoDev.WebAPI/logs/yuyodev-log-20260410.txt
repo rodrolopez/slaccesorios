@@ -1,0 +1,363 @@
+2026-04-10 11:13:21.984 -03:00 [INF] Start installing Hangfire SQL objects...
+2026-04-10 11:13:22.175 -03:00 [INF] Hangfire SQL objects installed.
+2026-04-10 11:13:22.620 -03:00 [INF] User profile is available. Using 'C:\Users\rodrigolopez\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-04-10 11:13:23.981 -03:00 [INF] Executed DbCommand (24ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:13:24.091 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:13:24.097 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:13:24.116 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[@normalizedEmail='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @normalizedEmail
+LIMIT 2
+2026-04-10 11:13:24.178 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@normalizedRoleName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedRoleName
+LIMIT 2
+2026-04-10 11:13:24.214 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p='?', @p1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM "AspNetUserRoles" AS a
+WHERE a."UserId" = @p AND a."RoleId" = @p1
+LIMIT 1
+2026-04-10 11:13:24.583 -03:00 [INF] Now listening on: https://localhost:7279
+2026-04-10 11:13:24.585 -03:00 [INF] Now listening on: http://localhost:5212
+2026-04-10 11:13:24.672 -03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: yuyodev_boilerplate, Schema: hangfire'
+2026-04-10 11:13:24.676 -03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-04-10 11:13:24.677 -03:00 [INF]     Queue poll interval: 00:00:15.
+2026-04-10 11:13:24.679 -03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-04-10 11:13:24.680 -03:00 [INF]     Use sliding invisibility timeout: False.
+2026-04-10 11:13:24.682 -03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-04-10 11:13:24.735 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-10 11:13:24.737 -03:00 [INF] Hosting environment: Development
+2026-04-10 11:13:24.739 -03:00 [INF] Content root path: C:\Users\rodrigolopez\source\repos\yuyodev-dotnet-boilerplate\YuyoDev.WebAPI
+2026-04-10 11:13:24.864 -03:00 [INF] Server pc-030:9120:63bcdea7 successfully announced in 125,9209 ms
+2026-04-10 11:13:24.871 -03:00 [INF] Server pc-030:9120:63bcdea7 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-04-10 11:13:25.213 -03:00 [INF] Server pc-030:9120:63bcdea7 all the dispatchers started
+2026-04-10 11:13:41.051 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - application/json 111
+2026-04-10 11:13:41.194 -03:00 [INF] Executing endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:13:41.218 -03:00 [INF] Route matched with {action = "Receive", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Receive(System.String, System.Object) on controller YuyoDev.WebAPI.Controllers.WebhookController (YuyoDev.WebAPI).
+2026-04-10 11:13:41.458 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AuditLogs" ("Action", "Details", "EntityName", "TenantId", "Timestamp", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "Id";
+2026-04-10 11:13:41.623 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-04-10 11:13:41.641 -03:00 [INF] Executed action YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI) in 414.7555ms
+2026-04-10 11:13:41.645 -03:00 [INF] Executed endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:13:41.658 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - 200 null application/json; charset=utf-8 631.9068ms
+2026-04-10 11:13:41.728 -03:00 [WRN] =============================================
+2026-04-10 11:13:41.729 -03:00 [WRN] SIMULACIÓN DE ENVÍO DE CORREO (Yuyo Dev)
+2026-04-10 11:13:41.731 -03:00 [WRN] Para: cliente@donatadeldesierto.com
+2026-04-10 11:13:41.732 -03:00 [WRN] Asunto: ¡Pago recibido desde mercadopago!
+2026-04-10 11:13:41.733 -03:00 [WRN] Cuerpo: Hola. Tu pago se procesó correctamente. Detalles: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta IPA"
+}
+2026-04-10 11:13:41.735 -03:00 [WRN] =============================================
+2026-04-10 11:18:25.229 -03:00 [INF] 1 servers were removed due to timeout
+2026-04-10 11:29:07.411 -03:00 [INF] Start installing Hangfire SQL objects...
+2026-04-10 11:29:07.572 -03:00 [INF] Hangfire SQL objects installed.
+2026-04-10 11:29:07.907 -03:00 [INF] User profile is available. Using 'C:\Users\rodrigolopez\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-04-10 11:29:09.110 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:29:09.197 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:29:09.202 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:29:09.227 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@normalizedEmail='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @normalizedEmail
+LIMIT 2
+2026-04-10 11:29:09.288 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@normalizedRoleName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedRoleName
+LIMIT 2
+2026-04-10 11:29:09.320 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p='?', @p1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM "AspNetUserRoles" AS a
+WHERE a."UserId" = @p AND a."RoleId" = @p1
+LIMIT 1
+2026-04-10 11:29:09.671 -03:00 [INF] Now listening on: https://localhost:7279
+2026-04-10 11:29:09.676 -03:00 [INF] Now listening on: http://localhost:5212
+2026-04-10 11:29:09.764 -03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: yuyodev_boilerplate, Schema: hangfire'
+2026-04-10 11:29:09.767 -03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-04-10 11:29:09.769 -03:00 [INF]     Queue poll interval: 00:00:15.
+2026-04-10 11:29:09.770 -03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-04-10 11:29:09.772 -03:00 [INF]     Use sliding invisibility timeout: False.
+2026-04-10 11:29:09.773 -03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-04-10 11:29:09.832 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-10 11:29:09.834 -03:00 [INF] Hosting environment: Development
+2026-04-10 11:29:09.835 -03:00 [INF] Content root path: C:\Users\rodrigolopez\source\repos\yuyodev-dotnet-boilerplate\YuyoDev.WebAPI
+2026-04-10 11:29:09.961 -03:00 [INF] Server pc-030:3476:c12e1e81 successfully announced in 126,2875 ms
+2026-04-10 11:29:09.971 -03:00 [INF] Server pc-030:3476:c12e1e81 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-04-10 11:29:10.584 -03:00 [INF] Server pc-030:3476:c12e1e81 all the dispatchers started
+2026-04-10 11:29:29.186 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/hangfire - null null
+2026-04-10 11:29:29.517 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/hangfire/css18230643356855 - null null
+2026-04-10 11:29:29.517 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/hangfire/css-dark182301223631298 - null null
+2026-04-10 11:29:29.519 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/hangfire/js182302036730518 - null null
+2026-04-10 11:29:29.519 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/hangfire - 200 null text/html 339.5514ms
+2026-04-10 11:29:29.530 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/hangfire/css-dark182301223631298 - 200 null text/css 12.4317ms
+2026-04-10 11:29:29.538 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/_framework/aspnetcore-browser-refresh.js - null null
+2026-04-10 11:29:29.549 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/_framework/aspnetcore-browser-refresh.js - 200 14933 application/javascript; charset=utf-8 11.3028ms
+2026-04-10 11:29:29.552 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/hangfire/css18230643356855 - 200 null text/css 35.628ms
+2026-04-10 11:29:29.554 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/hangfire/js182302036730518 - 200 null application/javascript 34.8237ms
+2026-04-10 11:29:29.558 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/_vs/browserLink - null null
+2026-04-10 11:29:29.646 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/_vs/browserLink - 200 null text/javascript; charset=UTF-8 87.5508ms
+2026-04-10 11:29:32.046 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:32.052 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:32.102 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 55.6878ms
+2026-04-10 11:29:35.045 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:35.052 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:35.075 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 30.0349ms
+2026-04-10 11:29:38.052 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:38.061 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:38.087 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 34.4712ms
+2026-04-10 11:29:41.043 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:41.061 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:41.097 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 53.472ms
+2026-04-10 11:29:44.052 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:44.070 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:44.099 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 47.408ms
+2026-04-10 11:29:47.035 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:47.042 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:47.054 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 19.4255ms
+2026-04-10 11:29:50.041 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:50.059 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:50.086 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 44.3101ms
+2026-04-10 11:29:53.039 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:53.042 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:53.049 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 9.4911ms
+2026-04-10 11:29:56.041 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:56.046 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:56.054 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 12.5436ms
+2026-04-10 11:29:59.038 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:29:59.041 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:29:59.052 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 13.423ms
+2026-04-10 11:29:59.439 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - application/json 111
+2026-04-10 11:30:00.160 -03:00 [INF] Executing endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:30:00.221 -03:00 [INF] Route matched with {action = "Receive", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Receive(System.String, System.Object) on controller YuyoDev.WebAPI.Controllers.WebhookController (YuyoDev.WebAPI).
+2026-04-10 11:30:00.497 -03:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AuditLogs" ("Action", "Details", "EntityName", "TenantId", "Timestamp", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "Id";
+2026-04-10 11:30:00.725 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-04-10 11:30:00.741 -03:00 [INF] Executed action YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI) in 508.2265ms
+2026-04-10 11:30:00.743 -03:00 [INF] Executed endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:30:00.759 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - 200 null application/json; charset=utf-8 1320.253ms
+2026-04-10 11:30:00.814 -03:00 [WRN] =============================================
+2026-04-10 11:30:00.815 -03:00 [WRN] SIMULACIÓN DE ENVÍO DE CORREO (Yuyo Dev)
+2026-04-10 11:30:00.817 -03:00 [WRN] Para: cliente@donatadeldesierto.com
+2026-04-10 11:30:00.818 -03:00 [WRN] Asunto: ¡Pago recibido desde mercadopago!
+2026-04-10 11:30:00.819 -03:00 [WRN] Cuerpo: Tu pago se procesó. Detalles: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta IPA"
+}
+2026-04-10 11:30:00.821 -03:00 [WRN] =============================================
+2026-04-10 11:30:00.824 -03:00 [INF] Preparando envío de WhatsApp para el número +5492641234567
+2026-04-10 11:30:01.839 -03:00 [INF] =============================================
+2026-04-10 11:30:01.841 -03:00 [INF]  WHATSAPP SIMULADO ENVIADO CON ÉXITO
+2026-04-10 11:30:01.842 -03:00 [INF]  Destino: +5492641234567
+2026-04-10 11:30:01.843 -03:00 [INF]  Mensaje: ¡Nueva venta por mercadopago! Ya podés preparar el pedido. Info: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta IPA"
+}
+2026-04-10 11:30:01.845 -03:00 [INF] =============================================
+2026-04-10 11:30:02.046 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:02.051 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:02.057 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 11.6205ms
+2026-04-10 11:30:05.040 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:05.047 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:05.065 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 24.5834ms
+2026-04-10 11:30:05.340 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - application/json 127
+2026-04-10 11:30:05.349 -03:00 [INF] Executing endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:30:05.351 -03:00 [INF] Route matched with {action = "Receive", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Receive(System.String, System.Object) on controller YuyoDev.WebAPI.Controllers.WebhookController (YuyoDev.WebAPI).
+2026-04-10 11:30:05.384 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AuditLogs" ("Action", "Details", "EntityName", "TenantId", "Timestamp", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "Id";
+2026-04-10 11:30:05.424 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-04-10 11:30:05.429 -03:00 [INF] Executed action YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI) in 72.6315ms
+2026-04-10 11:30:05.430 -03:00 [WRN] =============================================
+2026-04-10 11:30:05.431 -03:00 [INF] Executed endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:30:05.433 -03:00 [WRN] SIMULACIÓN DE ENVÍO DE CORREO (Yuyo Dev)
+2026-04-10 11:30:05.436 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - 200 null application/json; charset=utf-8 95.3543ms
+2026-04-10 11:30:05.436 -03:00 [WRN] Para: cliente@donatadeldesierto.com
+2026-04-10 11:30:05.443 -03:00 [WRN] Asunto: ¡Pago recibido desde mercadopago!
+2026-04-10 11:30:05.445 -03:00 [WRN] Cuerpo: Tu pago se procesó. Detalles: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta Donata del Desierto"
+}
+2026-04-10 11:30:05.447 -03:00 [INF] Preparando envío de WhatsApp para el número +5492641234567
+2026-04-10 11:30:05.449 -03:00 [WRN] =============================================
+2026-04-10 11:30:06.454 -03:00 [INF] =============================================
+2026-04-10 11:30:06.456 -03:00 [INF]  WHATSAPP SIMULADO ENVIADO CON ÉXITO
+2026-04-10 11:30:06.459 -03:00 [INF]  Destino: +5492641234567
+2026-04-10 11:30:06.461 -03:00 [INF]  Mensaje: ¡Nueva venta por mercadopago! Ya podés preparar el pedido. Info: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta Donata del Desierto"
+}
+2026-04-10 11:30:06.463 -03:00 [INF] =============================================
+2026-04-10 11:30:07.083 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:07.088 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:07.095 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 12.0245ms
+2026-04-10 11:30:09.108 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:09.117 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:09.133 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 24.8161ms
+2026-04-10 11:30:11.143 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:11.148 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:11.155 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 11.1823ms
+2026-04-10 11:30:13.161 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:13.166 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:13.180 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 19.3853ms
+2026-04-10 11:30:16.039 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:16.042 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:16.051 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 12.3841ms
+2026-04-10 11:30:18.061 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:18.065 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:18.077 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 16.0055ms
+2026-04-10 11:30:20.091 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:20.094 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:20.101 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 10.3413ms
+2026-04-10 11:30:23.048 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:23.053 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:23.066 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 18.4507ms
+2026-04-10 11:30:26.041 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:26.049 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:26.060 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 18.8409ms
+2026-04-10 11:30:29.039 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:29.048 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:29.059 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 19.739ms
+2026-04-10 11:30:32.034 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:32.045 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:32.068 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 34.0964ms
+2026-04-10 11:30:35.061 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:35.078 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:35.098 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 37.7527ms
+2026-04-10 11:30:38.036 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/hangfire/stats - application/x-www-form-urlencoded; charset=UTF-8 258
+2026-04-10 11:30:38.053 -03:00 [INF] CORS policy execution successful.
+2026-04-10 11:30:38.083 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/hangfire/stats - 200 null application/json 46.6454ms
+2026-04-10 11:36:25.787 -03:00 [INF] Start installing Hangfire SQL objects...
+2026-04-10 11:36:25.951 -03:00 [INF] Hangfire SQL objects installed.
+2026-04-10 11:36:26.351 -03:00 [INF] User profile is available. Using 'C:\Users\rodrigolopez\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-04-10 11:36:27.703 -03:00 [INF] Executed DbCommand (26ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:36:27.788 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:36:27.793 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@normalizedName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedName
+LIMIT 1
+2026-04-10 11:36:27.808 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@normalizedEmail='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @normalizedEmail
+LIMIT 2
+2026-04-10 11:36:27.878 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@normalizedRoleName='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM "AspNetRoles" AS a
+WHERE a."NormalizedName" = @normalizedRoleName
+LIMIT 2
+2026-04-10 11:36:27.914 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@p='?', @p1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM "AspNetUserRoles" AS a
+WHERE a."UserId" = @p AND a."RoleId" = @p1
+LIMIT 1
+2026-04-10 11:36:28.243 -03:00 [INF] Now listening on: https://localhost:7279
+2026-04-10 11:36:28.245 -03:00 [INF] Now listening on: http://localhost:5212
+2026-04-10 11:36:28.312 -03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: yuyodev_boilerplate, Schema: hangfire'
+2026-04-10 11:36:28.314 -03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-04-10 11:36:28.315 -03:00 [INF]     Queue poll interval: 00:00:15.
+2026-04-10 11:36:28.317 -03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-04-10 11:36:28.319 -03:00 [INF]     Use sliding invisibility timeout: False.
+2026-04-10 11:36:28.320 -03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-04-10 11:36:28.354 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-10 11:36:28.356 -03:00 [INF] Hosting environment: Development
+2026-04-10 11:36:28.358 -03:00 [INF] Content root path: C:\Users\rodrigolopez\source\repos\yuyodev-dotnet-boilerplate\YuyoDev.WebAPI
+2026-04-10 11:36:28.476 -03:00 [INF] Server pc-030:18028:8824c3b6 successfully announced in 120,1857 ms
+2026-04-10 11:36:28.485 -03:00 [INF] Server pc-030:18028:8824c3b6 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-04-10 11:36:28.541 -03:00 [INF] 2 servers were removed due to timeout
+2026-04-10 11:36:28.918 -03:00 [INF] Server pc-030:18028:8824c3b6 all the dispatchers started
+2026-04-10 11:36:34.555 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - application/json 111
+2026-04-10 11:36:35.113 -03:00 [INF] Executing endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:36:35.162 -03:00 [INF] Route matched with {action = "Receive", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Receive(System.String, System.Object) on controller YuyoDev.WebAPI.Controllers.WebhookController (YuyoDev.WebAPI).
+2026-04-10 11:36:35.429 -03:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AuditLogs" ("Action", "Details", "EntityName", "TenantId", "Timestamp", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "Id";
+2026-04-10 11:36:35.621 -03:00 [INF] Executing OkObjectResult, writing value of type 'YuyoDev.Application.Wrappers.Result`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-04-10 11:36:35.645 -03:00 [INF] Executed action YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI) in 475.4814ms
+2026-04-10 11:36:35.651 -03:00 [INF] Executed endpoint 'YuyoDev.WebAPI.Controllers.WebhookController.Receive (YuyoDev.WebAPI)'
+2026-04-10 11:36:35.672 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5212/api/webhook/mercadopago - 200 null application/json; charset=utf-8 1123.761ms
+2026-04-10 11:36:35.753 -03:00 [WRN] =============================================
+2026-04-10 11:36:35.785 -03:00 [INF] Preparando envío de WhatsApp para el número +5492641234567
+2026-04-10 11:36:35.793 -03:00 [WRN] SIMULACIÓN DE ENVÍO DE CORREO (Yuyo Dev)
+2026-04-10 11:36:35.797 -03:00 [WRN] Para: cliente@donatadeldesierto.com
+2026-04-10 11:36:35.800 -03:00 [WRN] Asunto: ¡Pago recibido desde mercadopago!
+2026-04-10 11:36:35.803 -03:00 [WRN] Cuerpo: Tu pago se procesó. Detalles: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta IPA"
+}
+2026-04-10 11:36:35.804 -03:00 [WRN] =============================================
+2026-04-10 11:36:36.815 -03:00 [INF] =============================================
+2026-04-10 11:36:36.818 -03:00 [INF]  WHATSAPP SIMULADO ENVIADO CON ÉXITO
+2026-04-10 11:36:36.819 -03:00 [INF]  Destino: +5492641234567
+2026-04-10 11:36:36.820 -03:00 [INF]  Mensaje: ¡Nueva venta por mercadopago! Ya podés preparar el pedido. Info: {
+    "id": "123456788",
+    "status": "approved",
+    "amount": 1500.00,
+    "description": "Pinta IPA"
+}
+2026-04-10 11:36:36.821 -03:00 [INF] =============================================

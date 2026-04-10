@@ -34,22 +34,23 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1eW9Ae
 ### Simular Webhook de Mercado Pago
 POST {{host}}/api/webhook/mercadopago
 Content-Type: application/json
+X-Tenant-Id: DonataDelDesierto
 
 {
-    "id": "123456789",
+    "id": "123456788",
     "status": "approved",
     "amount": 1500.00,
     "description": "Pinta Donata del Desierto"
 }
 
-#Simular Peticion por Cliente
+### Simular Webhook de Mercado Pago
 POST {{host}}/api/webhook/mercadopago
 Content-Type: application/json
-X-Tenant-Id: DonataDelDesierto
+X-Tenant-Id: Umbral
 
 {
-    "id": "987654321",
+    "id": "123456788",
     "status": "approved",
-    "amount": 2500.00,
-    "description": "Dos pintas IPA"
+    "amount": 1500.00,
+    "description": "Pinta IPA"
 }

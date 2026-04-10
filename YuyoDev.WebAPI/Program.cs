@@ -1,3 +1,4 @@
+using Serilog;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,15 @@ using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
+// 1. Configuramos Serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information() // Solo guardamos info importante para arriba (Warnings, Errors)
+    .WriteTo.Console() // Que siga mostrando en la consola negra
+    .WriteTo.File("logs/yuyodev-log-.txt", rollingInterval: RollingInterval.Day) // Que cree un archivo nuevo cada día
+    .CreateLogger();
+
+// 2. Le decimos a .NET que use Serilog en lugar del sistema por defecto
+builder.Host.UseSerilog();
 
 // --- 1. Agregar el servicio de CORS ---
 builder.Services.AddCors(options =>
@@ -88,6 +98,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddHttpClient<IWhatsAppService, WhatsAppService>();
 
 var app = builder.Build();
 
@@ -133,6 +144,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.Run(); // Esta es tu última línea actual
-
-app.Run();
+app.Run();// Esta es tu última línea actual
+Log.CloseAndFlush();

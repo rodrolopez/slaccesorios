@@ -1,8 +1,9 @@
+using YuyoDev.Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using YuyoDev.Domain.Entities;
 using YuyoDev.Infrastructure.Persistence;
 using YuyoDev.Application.Interfaces;
-using Hangfire; // <-- 1. Agregamos el using de Hangfire
+using Hangfire;
 
 namespace YuyoDev.WebAPI.Controllers;
 
@@ -11,7 +12,7 @@ namespace YuyoDev.WebAPI.Controllers;
 public class WebhookController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    private readonly IBackgroundJobClient _backgroundJobClient; // <-- 2. Inyectamos Hangfire
+    private readonly IBackgroundJobClient _backgroundJobClient;
 
     public WebhookController(ApplicationDbContext context, IBackgroundJobClient backgroundJobClient)
     {
@@ -22,7 +23,7 @@ public class WebhookController : ControllerBase
     [HttpPost("{source}")]
     public async Task<IActionResult> Receive(string source, [FromBody] object payload)
     {
-        // 1. Logueamos en la base de datos de inmediato
+        // 1. Guardamos en la base de datos (con el TenantId automático)
         var log = new AuditLog
         {
             Action = $"Webhook Received: {source}",
@@ -35,17 +36,27 @@ public class WebhookController : ControllerBase
         _context.AuditLogs.Add(log);
         await _context.SaveChangesAsync();
 
-        // 2. Preparamos los datos del correo
+        // 2. Preparamos los datos para los distintos canales
         string clienteEmail = "cliente@donatadeldesierto.com";
         string asunto = $"¡Pago recibido desde {source}!";
-        string mensaje = $"Hola. Tu pago se procesó correctamente. Detalles: {payload}";
+        string mensajeEmail = $"Tu pago se procesó. Detalles: {payload}";
 
-        // 3. LA MAGIA: Le pasamos la tarea a Hangfire y nos olvidamos.
-        // Hangfire instanciará IEmailService en un hilo de fondo y ejecutará el método.
-        _backgroundJobClient.Enqueue<IEmailService>(mailService =>
-            mailService.SendEmailAsync(clienteEmail, asunto, mensaje));
+        string celularAdmin = "+5492641234567";
+        string mensajeWsp = $"¡Nueva venta por {source}! Ya podés preparar el pedido. Info: {payload}";
 
-        // 4. Devolvemos el 200 OK a Mercado Pago en milisegundos
-        return Ok(new { message = $"Webhook de {source} procesado. Tarea de correo encolada en Hangfire." });
+        // 3. LA MAGIA: Encolamos ambas tareas en Hangfire y nos olvidamos
+        _backgroundJobClient.Enqueue<IEmailService>(mail =>
+            mail.SendEmailAsync(clienteEmail, asunto, mensajeEmail));
+
+        _backgroundJobClient.Enqueue<IWhatsAppService>(wsp =>
+            wsp.SendMessageAsync(celularAdmin, mensajeWsp));
+
+        // 4. Devolvemos la respuesta estandarizada
+        var respuesta = Result<object>.Ok(
+            data: new { Source = source },
+            message: $"Webhook de {source} procesado. Tareas encoladas en Hangfire."
+        );
+
+        return Ok(respuesta);
     }
 }
