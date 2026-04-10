@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using YuyoDev.Application.Services;
+using YuyoDev.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 // 1. Configuramos Serilog
@@ -99,6 +101,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<IWhatsAppService, WhatsAppService>();
+// Asegurate de tener estas dos líneas en tu contenedor de DI:
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
