@@ -478,3 +478,8 @@ POSITION: 72
 2026-04-10 16:09:45.974 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5212/swagger/favicon-32x32.png - null null
 2026-04-10 16:09:45.975 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/swagger/favicon-32x32.png - 304 null null 1.1315ms
 2026-04-10 16:09:46.055 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5212/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 95.0514ms
+2026-04-10 16:10:33.862 -03:00 [INF] Server university-inspiron-15-3530:31875:610e25d8 caught stopping signal...
+2026-04-10 16:10:33.866 -03:00 [INF] Application is shutting down...
+2026-04-10 16:10:33.876 -03:00 [INF] Server university-inspiron-15-3530:31875:610e25d8 All dispatchers stopped
+2026-04-10 16:10:33.889 -03:00 [INF] Server university-inspiron-15-3530:31875:610e25d8 successfully reported itself as stopped in 5.462 ms
+2026-04-10 16:10:33.889 -03:00 [INF] Server university-inspiron-15-3530:31875:610e25d8 has been stopped in total 23.9188 ms

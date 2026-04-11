@@ -37,4 +37,27 @@ public class ProductRepository : IProductRepository
             .Include(p => p.Brand)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
+
+    public async Task<(List<Product> Products, int TotalCount)> GetAllProductsAsync(int pageNumber, int pageSize, string? searchTerm, CancellationToken cancellationToken)
+    {
+        var query = _context.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(p => p.Name.ToLower().Contains(searchTerm.ToLower()));
+        }
+
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        var products = await query
+            .OrderByDescending(p => p.Id) // O por fecha de creación
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return (products, totalCount);
+    }
 }

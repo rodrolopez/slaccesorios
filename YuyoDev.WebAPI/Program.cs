@@ -104,6 +104,9 @@ builder.Services.AddHttpClient<IWhatsAppService, WhatsAppService>();
 // Asegurate de tener estas dos líneas en tu contenedor de DI:
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderProcessingJob, OrderProcessingJob>();
 
 var app = builder.Build();
 

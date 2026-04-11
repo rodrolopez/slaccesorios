@@ -1,6 +1,7 @@
 namespace YuyoDev.Application.Services;
 
 using YuyoDev.Application.Interfaces;
+using YuyoDev.Application.DTOs;
 using YuyoDev.Application.DTOs.Products;
 using YuyoDev.Domain.Entities;
 using YuyoDev.Domain.Shared;
@@ -22,13 +23,8 @@ public class ProductService : IProductService
         var brandExists = await _repository.BrandExistsAsync(request.BrandId, cancellationToken);
         if (!brandExists) return Result<Guid>.Failure("La marca no existe.");
 
-        var product = new Product
-        {
-            Name = request.Name,
-            Description = request.Description,
-            CategoryId = request.CategoryId,
-            BrandId = request.BrandId
-        };
+        // ACÁ ESTÁ LA MAGIA: Usamos el Factory Method en lugar de hacer "new Product { ... }"
+        var product = Product.Create(request.Name, request.Description, request.CategoryId, request.BrandId);
 
         await _repository.AddProductAsync(product, cancellationToken);
 
@@ -51,5 +47,30 @@ public class ProductService : IProductService
         };
 
         return Result<ProductDto>.Success(dto);
+    }
+
+    // LA IMPLEMENTACIÓN DEL GET ALL PAGINADO
+    public async Task<Result<PagedResultDto<ProductDto>>> GetAllAsync(int pageNumber, int pageSize, string? searchTerm, CancellationToken cancellationToken)
+    {
+        var (products, totalCount) = await _repository.GetAllProductsAsync(pageNumber, pageSize, searchTerm, cancellationToken);
+
+        var dtos = products.Select(p => new ProductDto
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            CategoryName = p.Category?.Name ?? "Sin categoría",
+            BrandName = p.Brand?.Name ?? "Sin marca"
+        }).ToList();
+
+        var pagedResult = new PagedResultDto<ProductDto>
+        {
+            Items = dtos,
+            TotalCount = totalCount,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        return Result<PagedResultDto<ProductDto>>.Success(pagedResult);
     }
 }

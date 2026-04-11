@@ -69,8 +69,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<ProductVariant>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Sku).HasMaxLength(50).IsRequired();
-            entity.HasIndex(e => e.Sku).IsUnique(); // El SKU es único a nivel tabla
+            entity.Property(e => e.SKU).HasMaxLength(50).IsRequired();
+            entity.HasIndex(e => e.SKU).IsUnique(); // El SKU es único a nivel tabla
 
             // Precisión PostgreSQL para manejar la plata
             entity.Property(e => e.Price).HasColumnType("numeric(18,2)");
