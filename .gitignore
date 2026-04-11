@@ -4,6 +4,10 @@ appsettings.Development.json
 ## --- CARPETAS DE COMPILACIÓN ---
 [Bb]in/
 [Oo]bj/
+bin\Debug/
+obj\Debug/
+bin\Release/
+obj\Release/
 
 ## --- VISUAL STUDIO / RIDER ---
 .vs/

@@ -109,6 +109,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderProcessingJob, OrderProcessingJob>();
 builder.Services.AddScoped<IWarrantyRepository, WarrantyRepository>();
 builder.Services.AddScoped<IWarrantyService, WarrantyService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 

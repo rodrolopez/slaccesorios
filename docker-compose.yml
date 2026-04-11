@@ -1,16 +1,32 @@
 services:
-  db-tech: # Cambiamos el nombre del servicio
+  postgres_db:
     image: postgres:15-alpine
-    container_name: slaccesorios # Nombre único para este proyecto
+    container_name: slaccesorios_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespassword
-      POSTGRES_DB: slaccesorios_db # Base de datos limpia
+      POSTGRES_PASSWORD: rootpassword # Cambiá esto por algo seguro
+      POSTGRES_DB: slaccesorios_db
     ports:
-      - "55432:5432" # <-- MAGIA: Exponemos el puerto 5433 en tu Ubuntu, hacia el 5432 del contenedor
+      - "5439:5432" # Expone el 5432 interno de postgres al 5439 de tu máquina Linux
     volumes:
-      - slaccesorios_data:/var/lib/postgresql/data # Volumen separado para no pisar el boilerplate
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    image: slaccesorios_api
+    container_name: slaccesorios_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Expone el puerto de la API
+    environment:
+      # Sobrescribimos la conexión para que apunte al contenedor de la base de datos, no a localhost
+      - ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=slaccesorios_db;Username=postgres;Password=rootpassword
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - postgres_db
     restart: unless-stopped
 
 volumes:
-  slaccesorios_data:
+  pgdata: # Este volumen asegura que la base de datos no se borre si apagás el contenedor

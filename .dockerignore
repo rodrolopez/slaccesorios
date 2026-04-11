@@ -1,0 +1,16 @@
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/bin/
+**/obj/
+**/out/
+**/logs/
+bin/
+obj/
+**/bin\Debug
+**/obj\Debug
+**/bin\Release
+**/obj\Release

@@ -53,4 +53,9 @@ public class TokenService : ITokenService
 
         return tokenHandler.WriteToken(token);
     }
+
+    public string GenerateToken(ApplicationUser user, IList<string> roles)
+    {
+        throw new NotImplementedException();
+    }
 }
