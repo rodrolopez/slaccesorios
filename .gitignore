@@ -1,5 +1,6 @@
 ## --- SECRETOS Y CONFIGURACIÓN LOCAL ---
 appsettings.Development.json
+appsettings.json
 
 ## --- CARPETAS DE COMPILACIÓN ---
 [Bb]in/
