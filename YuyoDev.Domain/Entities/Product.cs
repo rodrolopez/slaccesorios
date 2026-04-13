@@ -18,6 +18,9 @@ public class Product : IMustHaveTenant
     private readonly List<ProductVariant> _variants = new();
     public virtual IReadOnlyCollection<ProductVariant> Variants => _variants.AsReadOnly();
 
+    private readonly List<ProductImage> _productImages = new();
+    public virtual IReadOnlyCollection<ProductImage> ProductImages => _productImages.AsReadOnly();
+
     public string TenantId { get; set; } = string.Empty;
 
     // Constructor vacío requerido por Entity Framework

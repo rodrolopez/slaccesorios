@@ -25,4 +25,15 @@ public class StoreConfiguration
         SecondaryColorHex = secondary;
         UpdatedAt = DateTime.UtcNow;
     }
+    public static StoreConfiguration Create(string storeName)
+    {
+        return new StoreConfiguration { StoreName = storeName };
+    }
+
+    public void UpdateContactInfo(string? whatsapp, string? instagram)
+    {
+        WhatsAppNumber = whatsapp;
+        InstagramUrl = instagram;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }

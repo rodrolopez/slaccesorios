@@ -35,4 +35,8 @@ public class ProductReview
             Comment = comment
         };
     }
+    public void Approve()
+    {
+        IsApproved = true;
+    }
 }

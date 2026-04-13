@@ -110,6 +110,30 @@ builder.Services.AddScoped<IOrderProcessingJob, OrderProcessingJob>();
 builder.Services.AddScoped<IWarrantyRepository, WarrantyRepository>();
 builder.Services.AddScoped<IWarrantyService, WarrantyService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+// --- NUEVOS SERVICIOS DE LA FASE 1 ---
+builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+builder.Services.AddScoped<ICatalogService, CatalogService>();
+
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+// --- TANDA 2: CARRITO DE COMPRAS ---
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+// --- TANDA 3: CMS (CONFIGURACIÓN DE LA TIENDA) ---
+builder.Services.AddScoped<IStoreConfigurationRepository, StoreConfigurationRepository>();
+builder.Services.AddScoped<IStoreConfigurationService, StoreConfigurationService>();
+// --- TANDA 4: ENVÍOS Y TARIFAS ---
+builder.Services.AddScoped<IShippingRepository, ShippingRepository>();
+builder.Services.AddScoped<IShippingService, ShippingService>();
+// --- TANDA 5: MARKETING (CUPONES Y RESEÑAS) ---
+builder.Services.AddScoped<IMarketingRepository, MarketingRepository>();
+builder.Services.AddScoped<IMarketingService, MarketingService>();
+// --- TANDA FINAL: CHECKOUT Y PAGOS ---
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+
+// Fijate que MercadoPagoService viene de la capa Infrastructure
+builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 
 var app = builder.Build();
 
