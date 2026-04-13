@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: rootpassword # Cambiá esto por algo seguro
       POSTGRES_DB: slaccesorios_db
     ports:
-      - "5439:5432" # Expone el 5432 interno de postgres al 5439 de tu máquina Linux
+      - "5440:5432" # Expone el 5432 interno de postgres al 5439 de tu máquina Linux
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: unless-stopped

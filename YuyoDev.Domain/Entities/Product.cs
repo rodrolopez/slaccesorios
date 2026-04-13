@@ -1,6 +1,7 @@
 namespace YuyoDev.Domain.Entities;
 
 using YuyoDev.Domain.Abstractions;
+using YuyoDev.Domain.Entities.Catalog;
 
 public class Product : IMustHaveTenant
 {

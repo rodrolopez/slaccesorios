@@ -19,9 +19,8 @@ public class ProductVariant : IMustHaveTenant
 
     protected ProductVariant() { }
 
-    public static ProductVariant Create(Guid productId, string sku, string color, string modelName, decimal price, int initialStock)
+    public static ProductVariant Create(Guid productId, string sku, string color, string modelName, decimal price, int initialStock, decimal costPrice, decimal sellingPrice)
     {
-        // Acá podés meter reglas de negocio duras. Ej:
         if (price < 0) throw new ArgumentException("El precio no puede ser negativo");
 
         return new ProductVariant
@@ -32,7 +31,9 @@ public class ProductVariant : IMustHaveTenant
             Color = color,
             ModelName = modelName,
             Price = price,
-            Stock = initialStock
+            Stock = initialStock,
+            CostPrice = costPrice, // Ahora sí sabe de dónde viene
+            SellingPrice = sellingPrice
         };
     }
 
@@ -47,4 +48,11 @@ public class ProductVariant : IMustHaveTenant
         if (newPrice < 0) throw new ArgumentException("El precio no puede ser negativo");
         Price = newPrice;
     }
+
+    public decimal CostPrice { get; private set; } // Lo que nos cobra el proveedor
+    public decimal SellingPrice { get; private set; } // A lo que lo vendemos
+
+// Propiedad calculada al vuelo (no se guarda en DB, se calcula sola)
+    public decimal ProfitMarginPercentage =>
+        CostPrice > 0 ? ((SellingPrice - CostPrice) / CostPrice) * 100 : 0;
 }
