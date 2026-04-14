@@ -1,0 +1,21 @@
+@using YuyoDev.AdminPanel.Models
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="model.Name" Label="Nombre del Producto" Required="true" />
+        <MudTextField @bind-Value="model.Description" Label="Descripción" Lines="3" />
+        <MudNumericField @bind-Value="model.BasePrice" Label="Precio Base" Required="true" Min="0" />
+        <MudTextField @bind-Value="model.CategoryName" Label="Categoría" Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Guardar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance DialogInstance { get; set; } = null!;
+    private CreateProductDto model = new();
+
+    private void Submit() => DialogInstance.Close(DialogResult.Ok(model));
+    private void Cancel() => DialogInstance.Cancel();
+}

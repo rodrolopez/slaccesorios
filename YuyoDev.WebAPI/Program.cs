@@ -16,35 +16,27 @@ using YuyoDev.Application.Services;
 using YuyoDev.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // 1. Configuramos Serilog
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information() // Solo guardamos info importante para arriba (Warnings, Errors)
-    .WriteTo.Console() // Que siga mostrando en la consola negra
-    .WriteTo.File("logs/yuyodev-log-.txt", rollingInterval: RollingInterval.Day) // Que cree un archivo nuevo cada día
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/yuyodev-log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-// 2. Le decimos a .NET que use Serilog en lugar del sistema por defecto
 builder.Host.UseSerilog();
 
-// --- 1. Agregar el servicio de CORS ---
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
 
-// 1. CONEXIÓN A BASE DE DATOS (PostgreSQL)
-// Esto lee la cadena de conexión de tu appsettings.json (puerto 5439)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-// 2. CONFIGURACIÓN DE IDENTITY
-// Aquí es donde "casamos" a ApplicationUser con el DbContext
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.Password.RequireDigit = false;
@@ -53,7 +45,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.Password.RequireUppercase = false;
         options.Password.RequireLowercase = false;
     })
-    .AddEntityFrameworkStores<ApplicationDbContext>() // <-- ¡Esta línea soluciona tu error 500!
+    .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options => {
@@ -69,21 +61,14 @@ builder.Services.AddAuthentication(options => {
             ValidateAudience = true,
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero // Para que el token expire exacto cuando decimos
+            ClockSkew = TimeSpan.Zero
         };
     });
 
-// Acá registramos el servicio de correos
 builder.Services.AddTransient<IEmailService, LocalEmailService>();
-
-// Habilita a la API a leer los datos de la petición actual (Headers, Cookies, etc.)
 builder.Services.AddHttpContextAccessor();
-
-// Registramos el servicio de Tenant. Usamos "AddScoped" porque queremos 
-// que el TenantId se calcule una vez por cada petición HTTP que entra.
 builder.Services.AddScoped<ITenantService, TenantService>();
 
-// --- CONFIGURACIÓN DE HANGFIRE ---
 builder.Services.AddHangfire(config => config
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
@@ -91,17 +76,16 @@ builder.Services.AddHangfire(config => config
     .UsePostgreSqlStorage(options =>
     options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
-// Le decimos a la API que también funcione como un "Trabajador" que procesa tareas
 builder.Services.AddHangfireServer();
 
-// 3. SERVICIOS DE API Y SWAGGER
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<IWhatsAppService, WhatsAppService>();
-// Asegurate de tener estas dos líneas en tu contenedor de DI:
+
+// --- SERVICIOS FASE 1 COMPLETOS ---
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -110,74 +94,51 @@ builder.Services.AddScoped<IOrderProcessingJob, OrderProcessingJob>();
 builder.Services.AddScoped<IWarrantyRepository, WarrantyRepository>();
 builder.Services.AddScoped<IWarrantyService, WarrantyService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-// --- NUEVOS SERVICIOS DE LA FASE 1 ---
 builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
-
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
-// --- TANDA 2: CARRITO DE COMPRAS ---
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
-// --- TANDA 3: CMS (CONFIGURACIÓN DE LA TIENDA) ---
 builder.Services.AddScoped<IStoreConfigurationRepository, StoreConfigurationRepository>();
 builder.Services.AddScoped<IStoreConfigurationService, StoreConfigurationService>();
-// --- TANDA 4: ENVÍOS Y TARIFAS ---
 builder.Services.AddScoped<IShippingRepository, ShippingRepository>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
-// --- TANDA 5: MARKETING (CUPONES Y RESEÑAS) ---
 builder.Services.AddScoped<IMarketingRepository, MarketingRepository>();
 builder.Services.AddScoped<IMarketingService, MarketingService>();
-// --- TANDA FINAL: CHECKOUT Y PAGOS ---
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
-
-// Fijate que MercadoPagoService viene de la capa Infrastructure
 builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 
 var app = builder.Build();
 
 app.UseCors("AllowAll");
 
-// 4. CONFIGURACIÓN DEL PIPELINE (Middleware)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "YuyoDev API V1");
-        // Dejamos la ruta base como 'swagger'
-    });
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YuyoDev API V1"));
     app.UseHangfireDashboard();
 }
 
-// Importante: HTTP en Linux a veces es más estable para desarrollo local
-//app.UseHttpsRedirection();
-
 app.UseRouting();
-
-// EL ORDEN AQUÍ ES CRÍTICO
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
-// --- SIEMBRA DE DATOS (Roles) ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
-        // Llamamos a nuestro seeder
         await YuyoDev.WebAPI.Seeders.RoleSeeder.SeedRolesAsync(services);
     }
     catch (Exception ex)
     {
-        // Si algo falla al sembrar, lo vemos en la consola
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Ocurrió un error al sembrar los roles en la base de datos.");
     }
 }
 
-app.Run();// Esta es tu última línea actual
+app.Run();
 Log.CloseAndFlush();

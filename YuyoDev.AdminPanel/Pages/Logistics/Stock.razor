@@ -1,0 +1,62 @@
+@page "/stock"
+@using YuyoDev.AdminPanel.Services
+@inject InventoryApiService InventoryService
+@inject ISnackbar Snackbar
+
+<MudText Typo="Typo.h4" Class="mb-4">Movimientos de Stock</MudText>
+
+<MudCard Class="pa-4" MaxWidth="500px">
+    <MudCardContent>
+        <MudText Typo="Typo.h6">Ajuste Rápido</MudText>
+        <MudTextField @bind-Value="variantIdString" Label="ID Variante (Guid)" Required="true" Class="mb-3" />
+        <MudNumericField @bind-Value="quantity" Label="Cantidad (Usar negativo para restar)" Required="true" Class="mb-3" />
+        <MudTextField @bind-Value="notes" Label="Motivo / Notas" Lines="3" Class="mb-3" />
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveStock" Disabled="@isProcessing">
+            @if (isProcessing) { <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/> }
+            else { <span>Guardar Movimiento</span> }
+        </MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    private string variantIdString = string.Empty;
+    private int quantity = 0;
+    private string notes = string.Empty;
+    private bool isProcessing = false;
+
+    private async Task SaveStock()
+    {
+        if (!Guid.TryParse(variantIdString, out var variantId))
+        {
+            Snackbar.Add("El ID de la variante no es válido.", Severity.Warning);
+            return;
+        }
+
+        isProcessing = true;
+
+        try
+        {
+            var success = await InventoryService.AdjustStockAsync(variantId, quantity, notes);
+            if (success)
+            {
+                Snackbar.Add("Stock actualizado correctamente.", Severity.Success);
+                quantity = 0;
+                notes = string.Empty;
+            }
+            else
+            {
+                Snackbar.Add("Ocurrió un error al procesar la solicitud.", Severity.Error);
+            }
+        }
+        catch (Exception)
+        {
+            Snackbar.Add("Error de conexión con el servidor.", Severity.Error);
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+}

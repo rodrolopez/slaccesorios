@@ -20,7 +20,7 @@ public class StoreConfigurationService : IStoreConfigurationService
         // creamos una configuración por defecto para que el Frontend no explote.
         if (config == null)
         {
-            config = StoreConfiguration.Create("SL Accesorios");
+            config = StoreConfiguration.Create("SLAccesorios");
             await _repository.AddConfigurationAsync(config, cancellationToken);
         }
 

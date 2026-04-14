@@ -1,0 +1,58 @@
+﻿@page "/"
+
+<MudText Typo="Typo.h4" Class="mb-6">Dashboard de SLAccesorios</MudText>
+
+<MudGrid>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4 d-flex flex-column align-center justify-center mud-theme-primary" Elevation="3">
+            <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="Size.Large" Class="mb-2" />
+            <MudText Typo="Typo.h5">$ 1.245.500</MudText>
+            <MudText Typo="Typo.body2">Ventas de Abril</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4 d-flex flex-column align-center justify-center mud-theme-warning" Elevation="3">
+            <MudIcon Icon="@Icons.Material.Filled.PendingActions" Size="Size.Large" Class="mb-2" />
+            <MudText Typo="Typo.h5">12</MudText>
+            <MudText Typo="Typo.body2">Órdenes por Despachar</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4 d-flex flex-column align-center justify-center mud-theme-error" Elevation="3">
+            <MudIcon Icon="@Icons.Material.Filled.WarningAmber" Size="Size.Large" Class="mb-2" />
+            <MudText Typo="Typo.h5">5</MudText>
+            <MudText Typo="Typo.body2">Productos sin Stock</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4 d-flex flex-column align-center justify-center mud-theme-info" Elevation="3">
+            <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Large" Class="mb-2" />
+            <MudText Typo="Typo.h5">28</MudText>
+            <MudText Typo="Typo.body2">Clientes Nuevos</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" Class="mt-6">
+        <MudText Typo="Typo.h5" Class="mb-4">Accesos Rápidos</MudText>
+        <MudGrid>
+            <MudItem xs="12" sm="4">
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true" Href="/products" StartIcon="@Icons.Material.Filled.AddBox" Size="Size.Large">
+                    Cargar Producto
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudButton Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Href="/orders" StartIcon="@Icons.Material.Filled.LocalShipping" Size="Size.Large">
+                    Ver Envíos
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" FullWidth="true" Href="/stock" StartIcon="@Icons.Material.Filled.Inventory" Size="Size.Large">
+                    Ajustar Stock
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>

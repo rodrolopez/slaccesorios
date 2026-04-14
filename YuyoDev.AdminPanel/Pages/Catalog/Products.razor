@@ -1,0 +1,89 @@
+@page "/products"
+@using YuyoDev.AdminPanel.Models
+@using YuyoDev.AdminPanel.Services
+@using YuyoDev.AdminPanel.Pages.Catalog
+@inject CatalogApiService CatalogService
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+
+<MudText Typo="Typo.h4" Class="mb-4">Catálogo de Productos</MudText>
+
+<MudTable ServerData="ServerReload" Dense="true" Hover="true" @ref="table">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Inventario Activo</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Buscar..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mr-4"></MudTextField>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="@OpenAddDialog">Nuevo Producto</MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>ID</MudTh>
+        <MudTh>Nombre</MudTh>
+        <MudTh>Categoría</MudTh>
+        <MudTh>Marca</MudTh>
+        <MudTh>Acciones</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ID">@context.Id.ToString().Substring(0, 8)</MudTd>
+        <MudTd DataLabel="Nombre">@context.Name</MudTd>
+        <MudTd DataLabel="Categoría">@context.CategoryName</MudTd>
+        <MudTd DataLabel="Marca">@context.BrandName</MudTd>
+        <MudTd DataLabel="Acciones">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small" />
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No se encontraron productos.</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Cargando catálogo...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@code {
+    private MudTable<ProductDto> table = null!;
+    private string? searchString = null;
+
+    private async Task OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<ProductDialog>("Nuevo Producto", options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled && result.Data is CreateProductDto newProduct)
+        {
+            var success = await CatalogService.CreateProductAsync(newProduct);
+            if (success)
+            {
+                Snackbar.Add("Producto creado con éxito", Severity.Success);
+                await table.ReloadServerData();
+            }
+            else
+            {
+                Snackbar.Add("Error al crear producto", Severity.Error);
+            }
+        }
+    }
+
+    private async Task<TableData<ProductDto>> ServerReload(TableState state, CancellationToken token)
+    {
+        try
+        {
+            var result = await CatalogService.GetProductsAsync(state.Page + 1, state.PageSize, searchString);
+            return new TableData<ProductDto>() { TotalItems = result.TotalCount, Items = result.Items };
+        }
+        catch (Exception)
+        {
+            Snackbar.Add("Error al cargar productos.", Severity.Error);
+            return new TableData<ProductDto>() { TotalItems = 0, Items = new List<ProductDto>() };
+        }
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+}
