@@ -9,11 +9,11 @@ using YuyoDev.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace YuyoDev.Infrastructure.Persistence.Migrations
+namespace YuyoDev.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260413182208_EcommerceFullArchitecture")]
-    partial class EcommerceFullArchitecture
+    [Migration("20260415162606_InitialDB")]
+    partial class InitialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -379,6 +379,8 @@ namespace YuyoDev.Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
                 });
@@ -971,6 +973,15 @@ namespace YuyoDev.Infrastructure.Persistence.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("YuyoDev.Domain.Entities.Catalog.ProductImage", b =>
+                {
+                    b.HasOne("YuyoDev.Domain.Entities.Product", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("YuyoDev.Domain.Entities.Logistics.StockMovement", b =>
                 {
                     b.HasOne("YuyoDev.Domain.Entities.ProductVariant", "ProductVariant")
@@ -1128,6 +1139,8 @@ namespace YuyoDev.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("YuyoDev.Domain.Entities.Product", b =>
                 {
+                    b.Navigation("ProductImages");
+
                     b.Navigation("Variants");
                 });
 

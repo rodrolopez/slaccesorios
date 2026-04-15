@@ -8,7 +8,7 @@ using YuyoDev.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace YuyoDev.Infrastructure.Persistence.Migrations
+namespace YuyoDev.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -376,6 +376,8 @@ namespace YuyoDev.Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
                 });
@@ -968,6 +970,15 @@ namespace YuyoDev.Infrastructure.Persistence.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("YuyoDev.Domain.Entities.Catalog.ProductImage", b =>
+                {
+                    b.HasOne("YuyoDev.Domain.Entities.Product", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("YuyoDev.Domain.Entities.Logistics.StockMovement", b =>
                 {
                     b.HasOne("YuyoDev.Domain.Entities.ProductVariant", "ProductVariant")
@@ -1125,6 +1136,8 @@ namespace YuyoDev.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("YuyoDev.Domain.Entities.Product", b =>
                 {
+                    b.Navigation("ProductImages");
+
                     b.Navigation("Variants");
                 });
 
